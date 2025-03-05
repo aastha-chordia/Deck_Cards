@@ -10,6 +10,7 @@ class Main{
 				System.out.println("----------Suffling Deck----------");
 				deck.shuffleDeck();
 				deck.displayDeck();
-				
+				System.out.println("----------Random 2 Cards----------");
+				deck.randomCards();
 		}
 }
