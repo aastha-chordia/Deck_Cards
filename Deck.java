@@ -1,78 +1,92 @@
-//Main.java
+//Deck.java
+
 package Cards;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Deck deck = new Deck();
-        deck.createDeck();
+import Card;
 
-        while (true) {
-            System.out.println("\n--- Deck Menu ---");
-            System.out.println("1. Display Deck");
-            System.out.println("2. Display a Specific Card");
-            System.out.println("3. Find Cards with the Same Suit");
-            System.out.println("4. Find Cards with the Same Rank");
-            System.out.println("5. Find a Specific Card");
-            System.out.println("6. Deal 5 Random Cards");
-            System.out.println("7. Shuffle the Deck");
-            System.out.println("8. Exit");
-            System.out.print("Enter your choice: ");
+class Deck {
+    ArrayList<Card> deck;
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+    public Deck() {
+        this.deck = new ArrayList<>();
+    }
 
-            switch (choice) {
-                case 1 -> deck.displayDeck();
+    public Deck(ArrayList<Card> deck) {
+        this.deck = deck;
+    }
 
-                case 2 -> {
-                    System.out.print("Enter rank of the card: ");
-                    String rank = scanner.next();
-                    System.out.print("Enter suit of the card: ");
-                    String suit = scanner.next();
-                    deck.displayCard(rank, suit);
-                }
+    public void createDeck() {
+        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
 
-                case 3 -> {
-                    System.out.print("Enter rank of the card: ");
-                    String sameRank = scanner.next();
-                    System.out.print("Enter suit of the card: ");
-                    String sameSuit = scanner.next();
-                    deck.sameCard(sameRank, sameSuit);
-                }
-
-                case 4 -> {
-                    System.out.print("Enter rank of the card: ");
-                    String compareRank = scanner.next();
-                    System.out.print("Enter suit of the card: ");
-                    String compareSuit = scanner.next();
-                    deck.compareCard(compareRank, compareSuit);
-                }
-
-                case 5 -> {
-                    System.out.print("Enter rank of the card: ");
-                    String findRank = scanner.next();
-                    System.out.print("Enter suit of the card: ");
-                    String findSuit = scanner.next();
-                    deck.findCard(findRank, findSuit);
-                }
-
-                case 6 -> deck.dealCard();
-
-                case 7 -> {
-                    deck.shuffleDeck();
-                    System.out.println("Deck shuffled successfully.");
-                }
-
-                case 8 -> {
-                    System.out.println("Exiting program...");
-                    scanner.close();
-                    return;
-                }
-
-                default -> System.out.println("Invalid choice! Please enter a number between 1-8.");
+        for (String rank : ranks) {
+            for (String suit : suits) {
+                deck.add(new Card(rank, suit));
             }
         }
+    }
+
+    public void displayDeck() {
+        for (Card card : deck) {
+            System.out.println(card);
+        }
+    }
+
+    public void displayCard(String rank, String suit) {
+        System.out.println("Card is " + rank + " of " + suit);
+    }
+
+    public void sameCard(String rank, String suit) {
+        System.out.println("Cards with the same suit as " + rank + " of " + suit + ":");
+
+        for (Card card : deck) {
+            if (card.suit.equals(suit) && !card.rank.equals(rank)) {
+                System.out.println(card);
+            }
+        }
+    }
+
+    public void compareCard(String rank, String suit) {
+        System.out.println("Cards with the same rank as " + rank + " of " + suit + ":");
+
+        for (Card card : deck) {
+            if (card.rank.equals(rank) && !card.suit.equals(suit)) {
+                System.out.println(card);
+            }
+        }
+    }
+
+    public void findCard(String rank, String suit) {
+        for (Card card : deck) {
+            if (card.rank.equals(rank) && card.suit.equals(suit)) {
+                System.out.println("Card found: " + card);
+                return;
+            }
+        }
+        System.out.println("Card not found in the deck.");
+    }
+
+    public void dealCard() {
+        if (deck.size() < 5) {
+            System.out.println("Not enough cards in the deck.");
+            return;
+        }
+
+        Random rand = new Random();
+        HashSet<Integer> selectedIndices = new HashSet<>();
+
+        System.out.println("5 Randomly selected cards:");
+        while (selectedIndices.size() < 5) {
+            int index = rand.nextInt(deck.size());
+            if (!selectedIndices.contains(index)) {
+                selectedIndices.add(index);
+                System.out.println(deck.get(index));
+            }
+        }
+    }
+
+    public void shuffleDeck() {
+        Collections.shuffle(deck);
     }
 }
