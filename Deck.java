@@ -23,3 +23,12 @@ class Deck{
 				Collections.shuffle(deck);
 		}
 		
+		public void randomCards(){
+				int n = 0;
+				while(n == 2)
+						System.out.println();
+						n = n+1;
+				}
+		}
+}
+
