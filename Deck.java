@@ -6,8 +6,12 @@ class Deck{
 		}
 		public void createDeck(){
 				String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9","10", "J", "Q", "K", "A"};
-				String[] suits = {"Clubs", "Spades", "Hearts", "Diamond"};
-				
-				
+				String[] suits = {"Clubs", "Spades", "Hearts", "Diamond"};	
+				for(String rank : ranks){
+						for(String suit : suits){
+								deck.add(new Card(rank,suit));
+						}
+				}
+		}
 		
 		
