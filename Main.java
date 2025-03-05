@@ -5,5 +5,8 @@ class Main{
 				Deck deck = new Deck();
 				System.out.println("----------Creating Deck----------");
 				deck.createDeck();
+				System.out.println("----------Printing Deck----------");
+				deck.displayDeck();
 				
+		}
 }
